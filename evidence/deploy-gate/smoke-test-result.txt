@@ -1,0 +1,14 @@
+Deploy gate smoke test result:
+
+API URL:
+https://kjgg8qo6w5.execute-api.us-east-1.amazonaws.com/intake
+
+Request:
+POST /intake
+
+Response:
+submission_id = c5806f73-3449-420f-a68a-64b9c7c510ee
+status = received
+
+Result:
+The inherited Patient Intake API successfully deployed and accepted a test submission.
