@@ -1,0 +1,98 @@
+{
+    "component-definition":  {
+                                 "uuid":  "36191a48-ed4d-44d3-91fc-c7cc06779da8",
+                                 "metadata":  {
+                                                  "title":  "Acme Health Patient Intake API OSCAL Component Definition",
+                                                  "last-modified":  "2026-05-18T02:27:30Z",
+                                                  "version":  "1.0.0",
+                                                  "oscal-version":  "1.1.2",
+                                                  "parties":  [
+                                                                  {
+                                                                      "uuid":  "506f5504-fcc3-45a7-b442-c6fbd6c07fdf",
+                                                                      "type":  "organization",
+                                                                      "name":  "Acme Health"
+                                                                  }
+                                                              ]
+                                              },
+                                 "components":  [
+                                                    {
+                                                        "uuid":  "c955bacb-78d9-44f2-88dc-760673ea5d08",
+                                                        "type":  "software",
+                                                        "title":  "Acme Health Patient Intake API",
+                                                        "description":  "A HIPAA-aligned telehealth patient intake API governed through Terraform, Rego policy checks, GitHub Actions, signed evidence, and an immutable S3 evidence vault.",
+                                                        "control-implementations":  [
+                                                                                        {
+                                                                                            "uuid":  "ef5a1c85-b41f-4d9a-9b97-f4ba1762f782",
+                                                                                            "source":  "https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/part-164/subpart-C",
+                                                                                            "description":  "Implementation statements for selected HIPAA Security Rule safeguards mapped to technical controls in the capstone.",
+                                                                                            "implemented-requirements":  [
+                                                                                                                             {
+                                                                                                                                 "uuid":  "26db12cb-a918-40d9-95cf-762944f5c52f",
+                                                                                                                                 "control-id":  "164.312-a-2-iv",
+                                                                                                                                 "description":  "Encryption and decryption are implemented using a customer-managed AWS KMS key for PHI-related data stores, including S3 uploads and DynamoDB submissions.",
+                                                                                                                                 "links":  [
+                                                                                                                                               {
+                                                                                                                                                   "href":  "s3://acme-health-intake-evidence-c197281c/capstone/runs/26009609442/capstone-evidence-26009609442-f1f8cd60fe5a4b85b01e067947dd01a20fee70d9.tar.gz",
+                                                                                                                                                   "rel":  "evidence",
+                                                                                                                                                   "text":  "Signed capstone evidence bundle"
+                                                                                                                                               }
+                                                                                                                                           ]
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "uuid":  "f72ef44d-8689-40d8-b308-32b82c6aca9c",
+                                                                                                                                 "control-id":  "164.312-b",
+                                                                                                                                 "description":  "Audit controls are supported through multi-region CloudTrail management logging with log file validation and evidence captured from Terraform, AWS CLI, and GitHub Actions.",
+                                                                                                                                 "links":  [
+                                                                                                                                               {
+                                                                                                                                                   "href":  "evidence/capstone/cloudtrail-status.json",
+                                                                                                                                                   "rel":  "evidence",
+                                                                                                                                                   "text":  "CloudTrail status evidence"
+                                                                                                                                               }
+                                                                                                                                           ]
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "uuid":  "7e8df2ec-c2aa-44a8-b5fd-bfb4ede6502b",
+                                                                                                                                 "control-id":  "164.312-c-1",
+                                                                                                                                 "description":  "Integrity is supported through S3 versioning, Object Lock governance retention, SHA-256 hashing, Cosign signing, and chain-of-custody receipt metadata.",
+                                                                                                                                 "links":  [
+                                                                                                                                               {
+                                                                                                                                                   "href":  "evidence/capstone-signed/receipt.json",
+                                                                                                                                                   "rel":  "evidence",
+                                                                                                                                                   "text":  "Signed evidence receipt"
+                                                                                                                                               },
+                                                                                                                                               {
+                                                                                                                                                   "href":  "evidence/capstone-signed/sha256-verification.txt",
+                                                                                                                                                   "rel":  "evidence",
+                                                                                                                                                   "text":  "SHA-256 verification"
+                                                                                                                                               },
+                                                                                                                                               {
+                                                                                                                                                   "href":  "evidence/capstone-signed/cosign-verification.txt",
+                                                                                                                                                   "rel":  "evidence",
+                                                                                                                                                   "text":  "Cosign verification"
+                                                                                                                                               }
+                                                                                                                                           ]
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "uuid":  "8078aebd-aee1-4353-b2ef-0cd9cebd8dea",
+                                                                                                                                 "control-id":  "164.312-e-1",
+                                                                                                                                 "description":  "Transmission security is supported by TLS-only S3 bucket policies, private Lambda networking, and VPC endpoints for private AWS service access.",
+                                                                                                                                 "links":  [
+                                                                                                                                               {
+                                                                                                                                                   "href":  "evidence/capstone/uploads-bucket-policy.json",
+                                                                                                                                                   "rel":  "evidence",
+                                                                                                                                                   "text":  "S3 TLS-only policy evidence"
+                                                                                                                                               },
+                                                                                                                                               {
+                                                                                                                                                   "href":  "evidence/capstone/lambda-configuration.json",
+                                                                                                                                                   "rel":  "evidence",
+                                                                                                                                                   "text":  "Lambda VPC configuration evidence"
+                                                                                                                                               }
+                                                                                                                                           ]
+                                                                                                                             }
+                                                                                                                         ]
+                                                                                        }
+                                                                                    ]
+                                                    }
+                                                ]
+                             }
+}
