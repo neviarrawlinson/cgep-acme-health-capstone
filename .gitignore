@@ -23,3 +23,6 @@ evidence-run-*/
 # Local OS files
 .DS_Store
 Thumbs.db
+
+# Capstone signed evidence bundles
+evidence/capstone-signed/*.tar.gz

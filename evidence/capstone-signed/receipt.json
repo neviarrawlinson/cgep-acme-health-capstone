@@ -1,0 +1,10 @@
+{
+    "vault":  "acme-health-intake-evidence-c197281c",
+    "run_id":  "26009609442",
+    "uploaded_at_utc":  "2026-05-18T02:12:13Z",
+    "bundle_key":  "capstone/runs/26009609442/capstone-evidence-26009609442-f1f8cd60fe5a4b85b01e067947dd01a20fee70d9.tar.gz",
+    "signed_with":  "cosign keyless",
+    "commit":  "f1f8cd60fe5a4b85b01e067947dd01a20fee70d9",
+    "workflow":  "capstone-grc-gate",
+    "sha256":  "e8f7402190e58543f7f681ec09ff0df8a93e18fd89339936521cf0da7822772b"
+}
