@@ -1,0 +1,1 @@
+OSCAL component definition JSON parsed successfully.

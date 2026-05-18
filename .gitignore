@@ -1,17 +1,28 @@
 # Terraform
 .terraform/
-.terraform.lock.hcl
 *.tfstate
 *.tfstate.*
 *.tfvars
 !terraform.tfvars.example
 tfplan
 *.tfplan
+plan.json
+*.backup
 crash.log
+crash.*.log
 
-# Lambda build
+# Lambda build artifacts
 terraform/lambda/handler.zip
 
-# Local
-evidence/
+# Local downloaded evidence bundles
+evidence-run-*/
+*.tar.gz
+*.sig.bundle
+*.sha256
+
+# Local OS files
 .DS_Store
+Thumbs.db
+
+# Capstone signed evidence bundles
+evidence/capstone-signed/*.tar.gz

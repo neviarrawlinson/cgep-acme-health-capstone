@@ -1,0 +1,84 @@
+name: capstone-grc-gate
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - add-capstone-governance-baseline
+
+permissions:
+  contents: read
+
+jobs:
+  capstone-grc-gate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.8.5
+
+      - name: Install Conftest
+        run: |
+          CONFTEST_VERSION="0.56.0"
+          wget -q "https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz"
+          tar xzf "conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz"
+          sudo mv conftest /usr/local/bin/conftest
+          conftest --version
+
+      - name: Terraform format check
+        run: terraform fmt -check -recursive terraform
+
+      - name: Terraform init
+        working-directory: terraform
+        run: terraform init -backend=false -input=false
+
+      - name: Terraform validate
+        working-directory: terraform
+        run: terraform validate
+
+      - name: Run capstone policy gate against committed plan evidence
+        run: |
+          mkdir -p evidence/capstone
+          conftest test evidence/capstone/capstone-plan.json \
+            --policy policies \
+            --output json | tee evidence/capstone/ci-capstone-conftest-results.json
+
+      - name: Build workflow evidence bundle
+        run: |
+          mkdir -p evidence/workflow
+          {
+            echo "workflow=capstone-grc-gate"
+            echo "repository=${GITHUB_REPOSITORY}"
+            echo "run_id=${GITHUB_RUN_ID}"
+            echo "commit=${GITHUB_SHA}"
+            echo "branch=${GITHUB_REF_NAME}"
+            echo "timestamp_utc=$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+          } > evidence/workflow/workflow-context.txt
+
+          tar -czf "capstone-evidence-${GITHUB_RUN_ID}-${GITHUB_SHA}.tar.gz" \
+            evidence/capstone \
+            evidence/workflow \
+            policies \
+            terraform \
+            WRITEUP.md \
+            README.md
+
+          sha256sum "capstone-evidence-${GITHUB_RUN_ID}-${GITHUB_SHA}.tar.gz" \
+            > "capstone-evidence-${GITHUB_RUN_ID}-${GITHUB_SHA}.tar.gz.sha256"
+
+      - name: Upload workflow evidence artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: capstone-evidence-${{ github.run_id }}
+          path: |
+            capstone-evidence-*.tar.gz
+            capstone-evidence-*.tar.gz.sha256
+            evidence/capstone/ci-capstone-conftest-results.json
+            evidence/workflow/workflow-context.txt
